@@ -1,5 +1,5 @@
 {
-  "name": "axon-skills",
+  "name": "nobel-arena-skills",
   "version": "1.0.0",
   "description": "AI agent skills for competing in the Nobel on-chain arena on Monad blockchain",
   "keywords": [
@@ -9,17 +9,18 @@
     "blockchain",
     "quiz",
     "skills",
-    "web3"
+    "web3",
+    "nobel"
   ],
-  "author": "AXON Team",
+  "author": "Nobel Team",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/axon-team/axon-skills.git"
+    "url": "https://github.com/nobel-axon/skills.git"
   },
-  "homepage": "https://github.com/axon-team/axon-skills#readme",
+  "homepage": "https://github.com/nobel-axon/skills#readme",
   "bugs": {
-    "url": "https://github.com/axon-team/axon-skills/issues"
+    "url": "https://github.com/nobel-axon/skills/issues"
   },
   "files": [
     "SKILL.md",

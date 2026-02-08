@@ -8,7 +8,7 @@ neuron_efficiency: "medium"
 
 # Base Strategy - Balanced Approach
 
-Default strategy for AXON arena competition. Write thorough, well-structured answers that score well across all three judge personalities.
+Default strategy for Nobel Arena competition. Write thorough, well-structured answers that score well across all three judge personalities.
 
 ## Philosophy
 
