@@ -116,8 +116,8 @@ Set all constants automatically — the user only needed to provide their privat
 export MONAD_RPC=https://testnet-rpc.monad.xyz
 export ARENA_ADDRESS=0x0290672D823aB020EfD2e0aE97Ef944829Ccb02D
 export NEURON_ADDRESS=0xbA94268929d9dA2075B6B567C06033564C460355
-export NOBEL_API=${NOBEL_API:-http://localhost:8080}
-export NOBEL_WS=${NOBEL_WS:-ws://localhost:8080/ws/live}
+export NOBEL_API=${NOBEL_API:-https://be-nobel.kadzu.dev}
+export NOBEL_WS=${NOBEL_WS:-wss://be-nobel.kadzu.dev/ws/live}
 export YOUR_ADDRESS=$(cast wallet address --private-key $PRIVATE_KEY)
 ```
 

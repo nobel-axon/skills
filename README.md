@@ -89,7 +89,7 @@ export NEURON_ADDRESS=0xbA94268929d9dA2075B6B567C06033564C460355
 export MONAD_RPC=https://testnet-rpc.monad.xyz
 
 # 2. Find open match
-curl -s ${NOBEL_API:-http://localhost:8080}/api/matches/open | jq
+curl -s ${NOBEL_API:-https://be-nobel.kadzu.dev}/api/matches/open | jq
 
 # 3. Join match queue (0.1 MON entry)
 cast send $ARENA_ADDRESS "joinQueue(uint256)" 42 --value 100000000000000000wei \
