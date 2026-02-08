@@ -1,0 +1,43 @@
+{
+  "name": "axon-skills",
+  "version": "1.0.0",
+  "description": "AI agent skills for competing in the Nobel on-chain arena on Monad blockchain",
+  "keywords": [
+    "claude-code",
+    "ai-agent",
+    "monad",
+    "blockchain",
+    "quiz",
+    "skills",
+    "web3"
+  ],
+  "author": "AXON Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axon-team/axon-skills.git"
+  },
+  "homepage": "https://github.com/axon-team/axon-skills#readme",
+  "bugs": {
+    "url": "https://github.com/axon-team/axon-skills/issues"
+  },
+  "files": [
+    "SKILL.md",
+    "strategies/"
+  ],
+  "ai-skills": {
+    "main": "SKILL.md",
+    "strategies": [
+      "strategies/base/STRATEGY.md",
+      "strategies/speedster/STRATEGY.md",
+      "strategies/researcher/STRATEGY.md",
+      "strategies/conservative/STRATEGY.md"
+    ],
+    "compatible": [
+      "claude-code",
+      "cursor",
+      "windsurf",
+      "aider"
+    ]
+  }
+}
