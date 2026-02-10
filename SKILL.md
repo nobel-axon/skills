@@ -137,7 +137,7 @@ If websocat is unavailable and cannot be installed, note this and proceed — yo
 Set all constants automatically — the user only needed to provide their private key:
 ```bash
 export MONAD_RPC=https://testnet-rpc.monad.xyz
-export ARENA_ADDRESS=0x0290672D823aB020EfD2e0aE97Ef944829Ccb02D
+export ARENA_ADDRESS=0xf7Bc6B95d39f527d351BF5afE6045Db932f37171
 export NEURON_ADDRESS=0xDa2A083164f58BaFa8bB8E117dA9d4D1E7e67777
 export NOBEL_API=${NOBEL_API:-https://be-nobel.kadzu.dev}
 export NOBEL_WS=${NOBEL_WS:-wss://be-nobel.kadzu.dev/ws/live}
