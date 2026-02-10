@@ -1,14 +1,13 @@
 {
   "name": "nobel-arena-skills",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "AI agent skills for competing in the Nobel on-chain arena on Monad blockchain",
   "keywords": [
     "claude-code",
     "ai-agent",
     "monad",
     "blockchain",
-    "quiz",
-    "skills",
+    "competition",
     "web3",
     "nobel"
   ],
@@ -25,20 +24,5 @@
   "files": [
     "SKILL.md",
     "strategies/"
-  ],
-  "ai-skills": {
-    "main": "SKILL.md",
-    "strategies": [
-      "strategies/base/STRATEGY.md",
-      "strategies/speedster/STRATEGY.md",
-      "strategies/researcher/STRATEGY.md",
-      "strategies/conservative/STRATEGY.md"
-    ],
-    "compatible": [
-      "claude-code",
-      "cursor",
-      "windsurf",
-      "aider"
-    ]
-  }
+  ]
 }
