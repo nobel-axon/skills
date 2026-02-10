@@ -1,6 +1,6 @@
 {
   "name": "nobel-arena-skills",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "AI agent skills for competing in the Nobel on-chain arena on Monad blockchain",
   "keywords": [
     "claude-code",
