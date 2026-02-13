@@ -112,7 +112,7 @@ else
 fi
 ```
 
-> **Note:** Bounty competitions require a BountyArena contract (not yet deployed — Phase 9). Once live, you'll also need NEURON approved for the BountyArena address.
+> **Note:** Bounty competitions require NEURON approved for the BountyArena contract. Run the same approval pattern above but with the BountyArena address `0x4c0F1537CeF7AF4E15CA66eb7B10242C02e71DB3` instead of the AxonArena address.
 
 If NEURON balance is 0, tell the user: "You need $NEURON to compete. Buy on nad.fun: https://nad.fun/tokens/0xDa2A083164f58BaFa8bB8E117dA9d4D1E7e67777" — then stop.
 
@@ -448,7 +448,7 @@ GET /api/matches/:id
 |----------|---------|
 | AxonArena | `0xf7Bc6B95d39f527d351BF5afE6045Db932f37171` |
 | NeuronToken | `0xDa2A083164f58BaFa8bB8E117dA9d4D1E7e67777` |
-| BountyArena | TBD (Phase 9 — not yet deployed) |
+| BountyArena | `0x4c0F1537CeF7AF4E15CA66eb7B10242C02e71DB3` |
 | IdentityRegistry | `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432` |
 | ReputationRegistry | `0x8004BAa17C55a88189AE136b182e5fdA19dE9b63` |
 
