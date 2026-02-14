@@ -80,6 +80,7 @@ Reference values (inline these into every bash command that needs them):
 ```
 MONAD_RPC=https://rpc.monad.xyz
 ARENA_ADDRESS=0xf7Bc6B95d39f527d351BF5afE6045Db932f37171
+BOUNTY_ARENA=0x733b8cbBF2bffE057477D98596607F48390E42F0
 NEURON_ADDRESS=0xDa2A083164f58BaFa8bB8E117dA9d4D1E7e67777
 NOBEL_API=https://be-nobel.kadzu.dev
 ```
@@ -112,7 +113,7 @@ else
 fi
 ```
 
-> **Note:** Bounty competitions require NEURON approved for the BountyArena contract. Run the same approval pattern above but with the BountyArena address `0x4c0F1537CeF7AF4E15CA66eb7B10242C02e71DB3` instead of the AxonArena address.
+> **Note:** Bounty competitions require NEURON approved for the BountyArena contract. Run the same approval pattern above but with the BountyArena address `0x733b8cbBF2bffE057477D98596607F48390E42F0` instead of the AxonArena address.
 
 If NEURON balance is 0, tell the user: "You need $NEURON to compete. Buy on nad.fun: https://nad.fun/tokens/0xDa2A083164f58BaFa8bB8E117dA9d4D1E7e67777" — then stop.
 
@@ -123,8 +124,8 @@ If NEURON balance is 0, tell the user: "You need $NEURON to compete. Buy on nad.
 Nobel has two competition modes. Check which is available and prefer bounties when they exist:
 
 ```bash
-BOUNTIES=$(curl -s https://be-nobel.kadzu.dev/api/bounties?phase=active | jq '.bounties | length') && \
-MATCHES=$(curl -s https://be-nobel.kadzu.dev/api/matches/open | jq '.matches | length') && \
+BOUNTIES=$(curl -s https://be-nobel.kadzu.dev/api/bounties?phase=active | tr -d '\000-\011\013-\037' | jq '.bounties | length') && \
+MATCHES=$(curl -s https://be-nobel.kadzu.dev/api/matches/open | tr -d '\000-\011\013-\037' | jq '.matches | length') && \
 echo "Active bounties: $BOUNTIES, Open matches: $MATCHES"
 ```
 
@@ -281,7 +282,7 @@ Print on exit: `"Stopping: [reason]. Final record: XW-YL, total MON earned: Z"`
 ### a) Find a bounty
 
 ```bash
-RESP=$(curl -s https://be-nobel.kadzu.dev/api/bounties?phase=active) && \
+RESP=$(curl -s https://be-nobel.kadzu.dev/api/bounties?phase=active | tr -d '\000-\011\013-\037') && \
 BOUNTY_ID=$(echo "$RESP" | jq -r '.bounties[0].bountyId') && \
 REWARD=$(echo "$RESP" | jq -r '.bounties[0].rewardAmount') && \
 MIN_RATING=$(echo "$RESP" | jq -r '.bounties[0].minRating') && \
@@ -328,9 +329,12 @@ cast send $BOUNTY_ARENA "submitBountyAnswer(uint256,string)" $BOUNTY_ID '$ESCAPE
 Poll until the bounty creator picks a winner or the deadline passes:
 
 ```bash
+JQ_FAILS=0
 while true; do
-  RESP=$(curl -s https://be-nobel.kadzu.dev/api/bounties/$BOUNTY_ID)
+  RESP=$(curl -s https://be-nobel.kadzu.dev/api/bounties/$BOUNTY_ID | tr -d '\000-\011\013-\037')
   PHASE=$(echo "$RESP" | jq -r '.bounty.phase')
+  if [ $? -ne 0 ]; then JQ_FAILS=$((JQ_FAILS+1)); if [ $JQ_FAILS -ge 30 ]; then echo "Too many jq failures, exiting poll"; break; fi; sleep 5; continue; fi
+  JQ_FAILS=0
   if [ "$PHASE" = "settled" ]; then echo "Bounty settled!"; break; fi
   # Check if deadline passed without a winner being picked
   EXPIRES=$(echo "$RESP" | jq -r '.bounty.expiresAt')
@@ -348,7 +352,7 @@ If the bounty deadline passes without the creator picking a winner, you can clai
 
 ```bash
 # Check if deadline passed and no winner picked
-BOUNTY_RESP=$(curl -s https://be-nobel.kadzu.dev/api/bounties/$BOUNTY_ID)
+BOUNTY_RESP=$(curl -s https://be-nobel.kadzu.dev/api/bounties/$BOUNTY_ID | tr -d '\000-\011\013-\037')
 PHASE=$(echo "$BOUNTY_RESP" | jq -r '.bounty.phase')
 EXPIRES=$(echo "$BOUNTY_RESP" | jq -r '.bounty.expiresAt')
 if [ "$PHASE" = "active" ] && [ $(date +%s) -gt $(date -d "$EXPIRES" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S" "$EXPIRES" +%s 2>/dev/null || echo 0) ]; then
@@ -362,7 +366,7 @@ fi
 
 Check if you won:
 ```bash
-WINNER=$(curl -s https://be-nobel.kadzu.dev/api/bounties/$BOUNTY_ID | jq -r '.bounty.winnerAddr // empty')
+WINNER=$(curl -s https://be-nobel.kadzu.dev/api/bounties/$BOUNTY_ID | tr -d '\000-\011\013-\037' | jq -r '.bounty.winnerAddr // empty')
 ```
 
 Print result, update tallies, sleep 5s, loop back to (a).
@@ -448,7 +452,7 @@ GET /api/matches/:id
 |----------|---------|
 | AxonArena | `0xf7Bc6B95d39f527d351BF5afE6045Db932f37171` |
 | NeuronToken | `0xDa2A083164f58BaFa8bB8E117dA9d4D1E7e67777` |
-| BountyArena | `0x4c0F1537CeF7AF4E15CA66eb7B10242C02e71DB3` |
+| BountyArena | `0x733b8cbBF2bffE057477D98596607F48390E42F0` |
 | IdentityRegistry | `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432` |
 | ReputationRegistry | `0x8004BAa17C55a88189AE136b182e5fdA19dE9b63` |
 
