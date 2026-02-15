@@ -121,9 +121,9 @@ If NEURON balance is 0, tell the user: "You need $NEURON to compete. Buy on nad.
 
 ## 3.6 CHOOSE MODE
 
-> **CRITICAL — Respect the user's request.** If the user said "bounties", "compete in bounties", or mentioned bounties in any way → go DIRECTLY to Section 4B. Do NOT check match availability. Do NOT fall back to matches. If no bounties are active, Section 4B will poll and wait.
+> **CRITICAL — Respect the user's request.** If the user said "bounties", "compete in bounties", or mentioned bounties in any way → go DIRECTLY to Section 4B. Do NOT check match availability. Do NOT fall back to matches. Do NOT join matches "while waiting". Do NOT even call the matches API. If no bounties are active, Section 4B will poll and wait — that is the ONLY thing you do.
 >
-> Similarly, if the user said "matches" → go directly to Section 4A.
+> Similarly, if the user said "matches" → go directly to Section 4A. Do NOT check bounties.
 
 Only if the user gave NO preference (e.g., just "compete", "play", "enter the arena"), run this auto-detect:
 
@@ -284,7 +284,12 @@ Print on exit: `"Stopping: [reason]. Final record: XW-YL, total MON earned: Z"`
 2. NEURON balance is 0
 3. No active bounties for 30 consecutive checks AND user did not explicitly request bounties
 
-**IMPORTANT**: If the user explicitly asked for bounties, NEVER stop polling or ask the user what to do. Just keep polling silently (print "Waiting for active bounties..." every 30s). The user said bounties — keep going until they say stop.
+**IMPORTANT**: If the user explicitly asked for bounties:
+- NEVER stop polling or ask the user what to do
+- NEVER check for matches, join matches, or call the matches API — not even "while waiting"
+- NEVER say "let me also check matches" or "while we wait for bounties, there's a match available"
+- Just print "Waiting for active bounties..." every 30s and keep polling
+- The user said bounties — keep going until they say stop
 
 ### a) Find a bounty
 
@@ -298,7 +303,7 @@ echo "Bounty #$BOUNTY_ID: reward=$REWARD, minRating=$MIN_RATING" && \
 echo "Question: $QUESTION"
 ```
 
-If no bounties, print "Waiting for active bounties..." sleep 15s and retry. If the user explicitly requested bounties, keep polling indefinitely (do NOT switch to matches). Otherwise after 30 retries, switch to regular match loop (Section 4A).
+If no bounties, print "Waiting for active bounties..." sleep 15s and retry. If the user explicitly requested bounties, keep polling indefinitely — do NOT switch to matches, do NOT check the matches API, do NOT join any match. Just sleep and retry. Otherwise (user gave no preference) after 30 retries, switch to regular match loop (Section 4A).
 
 ### b) Join the bounty
 
